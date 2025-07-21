@@ -1,7 +1,7 @@
 # Blog app
 
 This app is based on the Odin Projects 4th last Node project.
-The goal is to practice creating a backend api, then interact with the api through 2 separate frontends. See the Backend README for more info.
+The goal is to practice creating a backend api, then interact with the api through 2 separate frontends. See the [Backend README](https://github.com/xzovy1/blog/blob/main/backend/README.md) for more info.
 
 ### Goals
 
