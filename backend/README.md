@@ -21,17 +21,17 @@ Visitors to the blog site can only Create comments. all other CRUD capabilities 
 - GET `/api/posts`: all posts.
 - GET `/api/posts/:postid`: a specific post
 - GET `/api/posts/:postid/comments`: all comments associated with a specific post
-- GET `/api/posts/:postid/comments/:commentid`: specific comment associated with a specific post
 - POST `/api/posts/postid/comments`: creates a new comment on a post
-- POST `/api/posts/:postid/comments/:commentid`: creates reply to a comment
+- GET `/api/posts/:postid/:commentid`: specific comment associated with a specific post
+- POST `/api/posts/:postid/:commentid`: creates reply to a comment
 
 ### Author-specific Routes
 
 - POST `/api/posts`: creates a new post
 - PUT `/api/posts/:postid`: updates a post
 - DELETE `/api/posts/:postid`: deletes a post
-- PUT `/api/posts/:commentid`: updates a comment
-- DELETE `/api/posts/:commentid`: deletes a comment
+- PUT `/api/posts/:commentid`: updates a comment (used for moderating comments)
+- DELETE `/api/posts/:commentid`: deletes a comment (used for moderating comments)
 
 ## Models
 
