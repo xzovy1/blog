@@ -13,6 +13,7 @@ const getAllPostComments = async (req, res) => {
   const { postId } = req.params;
   res.json({ message: `All Post ${postId} comments` });
 };
+
 const getIndividualComment = async (req, res) => {
   const { postId, commentId } = req.params;
   res.json({ message: `Post ${postId} Comment ${commentId}` });

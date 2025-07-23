@@ -1,7 +1,18 @@
 import prisma from "../prisma/client.js";
+import jwt from "jsonwebtoken";
+
+function verifyToken(req, res, message) {
+  jwt.verify(req.token, process.env.JWT_KEY, (err, authData) => {
+    console.log(authData);
+    if (err) res.sendStatus(403);
+    else {
+      res.json(message, authData);
+    }
+  });
+}
 
 const createBlogPost = async (req, res) => {
-  return res.json({ message: "Created new Post!" });
+  verifyToken(req, res, { message: "Created new Post!" });
 };
 const updateBlogPost = async (req, res) => {
   const { postId } = req.params;
