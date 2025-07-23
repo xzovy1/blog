@@ -4,11 +4,6 @@ import postControllerPrivate from "../controllers/postControllerPrivate.js";
 
 const postRouter = Router();
 
-const verifyAuth = async (req, res, next) => {
-  console.log("Path verified");
-  next();
-};
-
 //Public Routes
 postRouter.get("/", postControllerPublic.getAllPosts);
 postRouter.get("/:postId", postControllerPublic.getIndividualPost);
@@ -23,18 +18,39 @@ postRouter.get(
 postRouter.post("/:postId/:commentId", postControllerPublic.createCommentReply);
 
 //Protected Routes
-postRouter.post("/", verifyAuth, postControllerPrivate.createBlogPost);
-postRouter.put("/:postId", verifyAuth, postControllerPrivate.updateBlogPost);
-postRouter.delete("/:postId", verifyAuth, postControllerPrivate.deleteBlogPost);
+
+const addTokenToHeader = async (req, res, next) => {
+  const bearerHeader = req.headers["authorization"];
+  if (typeof bearerHeader !== "undefined") {
+    const bearer = bearerHeader.split(" ");
+    const token = bearer[1];
+    req.token = token;
+  } else {
+    res.sendStatus(403);
+  }
+  next();
+};
+
+postRouter.post("/", addTokenToHeader, postControllerPrivate.createBlogPost);
+postRouter.put(
+  "/:postId",
+  addTokenToHeader,
+  postControllerPrivate.updateBlogPost
+);
+postRouter.delete(
+  "/:postId",
+  addTokenToHeader,
+  postControllerPrivate.deleteBlogPost
+);
 
 postRouter.put(
   "/:postId/:commentId",
-  verifyAuth,
+  addTokenToHeader,
   postControllerPrivate.updateBlogPostComment
 );
 postRouter.delete(
   "/:postId/:commentId",
-  verifyAuth,
+  addTokenToHeader,
   postControllerPrivate.deleteBlogPostComment
 );
 

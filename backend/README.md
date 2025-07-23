@@ -3,6 +3,7 @@
 This app is for a personal blog. The backend will only pass JSON to be handled by the frontend which will be running react in both the author/ and visitor/ folders.
 
 - authentication will be handled by JWT's. (use passport-jwt or npm jsonwebtoken ?)
+  - use passport jwt, so that
 
 The backend will store:
 
@@ -54,3 +55,7 @@ Comment:
 - the name of the person who posted the comment
 - the date of the comment.
 - consider having comments being replied to other comments.
+
+# Authentication
+
+- the author login will have authentication, so for that reason I'll implement passportjs and passport-jwt
