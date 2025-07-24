@@ -20,10 +20,13 @@
   "homepage": "https://github.com/xzovy1/blog#readme",
   "dependencies": {
     "@prisma/client": "^6.12.0",
+    "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
+    "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
+    "passport-local": "^1.0.0",
     "pg": "^8.16.3"
   },
   "devDependencies": {

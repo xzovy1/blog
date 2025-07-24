@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 
 function verifyToken(req, res, message) {
   jwt.verify(req.token, process.env.JWT_KEY, (err, authData) => {
-    console.log(authData);
+    // console.log(authData);
     if (err) res.sendStatus(403);
     else {
       res.json(message, authData);
