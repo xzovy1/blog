@@ -1,7 +1,8 @@
 import prisma from "../prisma/client.js";
 
 const getAllPosts = async (req, res) => {
-  res.json({ message: "All Posts..." });
+  const posts = await prisma.post.findMany();
+  res.json({ posts });
 };
 
 const getIndividualPost = async (req, res) => {

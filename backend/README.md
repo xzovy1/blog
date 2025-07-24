@@ -59,3 +59,5 @@ Comment:
 # Authentication
 
 - the author login will have authentication, so for that reason I'll implement passportjs and passport-jwt
+
+## To do:
