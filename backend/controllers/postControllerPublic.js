@@ -1,7 +1,11 @@
 import prisma from "../prisma/client.js";
 
-const getAllPosts = async (req, res) => {
-  const posts = await prisma.post.findMany();
+const getAllPublishedPosts = async (req, res) => {
+  const posts = await prisma.post.findMany({
+    where: {
+      published_status: true,
+    },
+  });
   res.json({ posts });
 };
 
@@ -31,7 +35,7 @@ const createCommentReply = async (req, res) => {
 };
 
 export default {
-  getAllPosts,
+  getAllPublishedPosts,
   getIndividualPost,
   getAllPostComments,
   getIndividualComment,

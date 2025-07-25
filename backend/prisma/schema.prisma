@@ -10,7 +10,7 @@ generator client {
 
 model Author {
     id       String    @unique @default(uuid()) @db.Uuid
-    username String    @unique
+    name     String    @unique
     password String
     posts    Post[]
     comments Comment[]
@@ -22,7 +22,7 @@ model Post {
     body             String
     published_date   DateTime  @default(now())
     published_status Boolean   @default(false) @db.Boolean
-    author           Author    @relation(fields: [author_name], references: [username])
+    author           Author    @relation(fields: [author_name], references: [name])
     author_name      String    @default("author")
     comments         Comment[]
 }

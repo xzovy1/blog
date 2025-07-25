@@ -7,7 +7,7 @@ import bcrypt from "bcryptjs";
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {
-      const user = await prisma.user.findUnique({
+      const user = await prisma.author.findUnique({
         where: {
           name: username,
         },
@@ -35,6 +35,7 @@ const login = async (req, res, next) => {
 
     jwt.sign({ user }, process.env.JWT_KEY, (err, token) => {
       //save token to localStorage.
+      console.log(token);
       res.json({
         token,
       });

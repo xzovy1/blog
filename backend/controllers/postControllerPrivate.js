@@ -10,7 +10,10 @@ function verifyToken(req, res, message) {
     }
   });
 }
-
+const getAllPosts = async (req, res) => {
+  const posts = await prisma.post.findMany();
+  verifyToken(req, res, { posts });
+};
 const createBlogPost = async (req, res) => {
   verifyToken(req, res, { message: "Created new Post!" });
 };
@@ -32,6 +35,7 @@ const deleteBlogPostComment = async (req, res) => {
 };
 
 export default {
+  getAllPosts,
   createBlogPost,
   updateBlogPost,
   deleteBlogPost,

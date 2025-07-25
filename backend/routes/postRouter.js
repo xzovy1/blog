@@ -5,7 +5,7 @@ import postControllerPrivate from "../controllers/postControllerPrivate.js";
 const postRouter = Router();
 
 //Public Routes
-postRouter.get("/", postControllerPublic.getAllPosts);
+postRouter.get("/", postControllerPublic.getAllPublishedPosts);
 postRouter.get("/:postId", postControllerPublic.getIndividualPost);
 
 postRouter.get("/:postId/comments", postControllerPublic.getAllPostComments);
