@@ -33,13 +33,18 @@ const login = async (req, res, next) => {
     if (err) return next(err);
     if (!user) return res.json({ message: "Incorrect Username or Password" });
 
-    jwt.sign({ user }, process.env.JWT_KEY, (err, token) => {
-      //save token to localStorage.
-      console.log(token);
-      res.json({
-        token,
-      });
-    });
+    jwt.sign(
+      { user },
+      process.env.JWT_KEY,
+      // { expiresIn: "30" },
+      (err, token) => {
+        //save token to localStorage.
+        console.log(token);
+        res.json({
+          token,
+        });
+      }
+    );
   })(req, res, next);
 };
 

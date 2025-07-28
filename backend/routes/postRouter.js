@@ -20,7 +20,6 @@ postRouter.post("/:postId/:commentId", postControllerPublic.createCommentReply);
 
 //Protected Routes
 
-//refactor both middleware. postRouter.use(addTokenToHeader, verifyToken)?
 const verifyToken = (req, res, next) => {
   jwt.verify(req.token, process.env.JWT_KEY, (err, authData) => {
     // console.log(authData);
@@ -43,41 +42,20 @@ const addTokenToHeader = (req, res, next) => {
   next();
 };
 
-postRouter.get(
-  "/",
-  addTokenToHeader,
-  verifyToken,
-  postControllerPrivate.getAllPosts
-);
-postRouter.post(
-  "/",
-  addTokenToHeader,
-  verifyToken,
-  postControllerPrivate.createBlogPost
-);
-postRouter.put(
-  "/:postId",
-  addTokenToHeader,
-  verifyToken,
-  postControllerPrivate.updateBlogPost
-);
-postRouter.delete(
-  "/:postId",
-  addTokenToHeader,
-  verifyToken,
-  postControllerPrivate.deleteBlogPost
-);
+postRouter.use(addTokenToHeader);
+postRouter.use(verifyToken);
+
+postRouter.get("/", postControllerPrivate.getAllPosts);
+postRouter.post("/", postControllerPrivate.createBlogPost);
+postRouter.put("/:postId", postControllerPrivate.updateBlogPost);
+postRouter.delete("/:postId", postControllerPrivate.deleteBlogPost);
 
 postRouter.put(
   "/:postId/:commentId",
-  addTokenToHeader,
-  verifyToken,
   postControllerPrivate.updateBlogPostComment
 );
 postRouter.delete(
   "/:postId/:commentId",
-  addTokenToHeader,
-  verifyToken,
   postControllerPrivate.deleteBlogPostComment
 );
 

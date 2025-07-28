@@ -2,7 +2,7 @@ import prisma from "../prisma/client.js";
 
 const getAllPosts = async (req, res) => {
   const posts = await prisma.post.findMany();
-  res.json({ posts });
+  res.json(posts);
 };
 const createBlogPost = async (req, res) => {
   const { title, body } = req.body;
@@ -12,15 +12,33 @@ const createBlogPost = async (req, res) => {
       body,
     },
   });
-  res.json({ post });
+  res.json(post);
 };
 const updateBlogPost = async (req, res) => {
   const { postId } = req.params;
-  return res.json({ message: `Updated Post ${postId}!` });
+  const { title, body, publishedStatus } = req.body;
+  let status = publishedStatus === "true";
+  const post = await prisma.post.update({
+    where: {
+      id: postId,
+    },
+    data: {
+      title,
+      body,
+      published_status: status,
+      updated_date: new Date(),
+    },
+  });
+  return res.json(post);
 };
 const deleteBlogPost = async (req, res) => {
   const { postId } = req.params;
-  return res.json({ message: `Deleted Post ${postId}!` });
+  const post = await prisma.post.delete({
+    where: {
+      id: postId,
+    },
+  });
+  return res.json({ message: `Deleted Post ${post.title}!` });
 };
 const updateBlogPostComment = async (req, res) => {
   const { postId, commentId } = req.params;

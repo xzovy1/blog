@@ -6,12 +6,17 @@ const getAllPublishedPosts = async (req, res) => {
       published_status: true,
     },
   });
-  res.json({ posts });
+  res.json(posts);
 };
 
 const getIndividualPost = async (req, res) => {
   const { postId } = req.params;
-  res.json({ message: `Single Post ${postId}` });
+  const post = await prisma.post.findUnique({
+    where: {
+      id: postId,
+    },
+  });
+  res.json(post);
 };
 
 const getAllPostComments = async (req, res) => {
