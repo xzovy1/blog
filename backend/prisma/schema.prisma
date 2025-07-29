@@ -1,39 +1,47 @@
 datasource db {
-  url      = env("DATABASE_URL")
-  provider = "postgresql"
+    url      = env("DATABASE_URL")
+    provider = "postgresql"
 }
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["relationJoins"]
+    provider        = "prisma-client-js"
+    previewFeatures = ["relationJoins"]
 }
 
 model Author {
-  id       String    @unique @default(uuid()) @db.Uuid
-  name     String    @unique
-  password String
-  posts    Post[]
-  comments Comment[]
+    id       String @unique @default(uuid()) @db.Uuid
+    name     String @unique
+    password String
+    posts    Post[]
 }
 
 model Post {
-  id               String    @unique @default(uuid()) @db.Uuid
-  title            String
-  body             String
-  published_date   DateTime  @default(now())
-  published_status Boolean   @default(false) @db.Boolean
-  updated_date     DateTime  @default(now())
-  author           Author    @relation(fields: [author_name], references: [name])
-  author_name      String    @default("author")
-  comments         Comment[]
+    id               String    @unique @default(uuid()) @db.Uuid
+    title            String
+    body             String
+    published_date   DateTime  @default(now())
+    published_status Boolean   @default(false) @db.Boolean
+    updated_date     DateTime  @default(now())
+    author           Author    @relation(fields: [author_name], references: [name])
+    author_name      String    @default("author")
+    comments         Comment[]
 }
 
 model Comment {
-  id        String   @unique @db.Uuid
-  body      String
-  date      DateTime @default(now())
-  post      Post?    @relation(fields: [post_id], references: [id])
-  post_id   String?  @db.Uuid
-  author    Author?  @relation(fields: [author_id], references: [id])
-  author_id String?  @db.Uuid
+    id          String   @unique @default(uuid()) @db.Uuid
+    body        String
+    date        DateTime @default(now())
+    post        Post?    @relation(fields: [post_id], references: [id])
+    post_id     String?  @db.Uuid
+    author_name String
+    replies     Reply[]
+}
+
+model Reply {
+    id          String   @unique @default(uuid()) @db.Uuid
+    body        String
+    date        DateTime @default(now())
+    comment     Comment  @relation(fields: [comment_id], references: [id])
+    comment_id  String   @db.Uuid
+    author_name String
 }

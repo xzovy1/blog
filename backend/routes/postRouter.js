@@ -17,9 +17,12 @@ postRouter.get(
   postControllerPublic.getIndividualComment
 );
 postRouter.post("/:postId/:commentId", postControllerPublic.createCommentReply);
+postRouter.get(
+  "/:commentId/replies",
+  postControllerPublic.getAllCommentReplies
+);
 
 //Protected Routes
-
 const verifyToken = (req, res, next) => {
   jwt.verify(req.token, process.env.JWT_KEY, (err, authData) => {
     // console.log(authData);

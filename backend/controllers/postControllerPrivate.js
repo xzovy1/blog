@@ -42,11 +42,30 @@ const deleteBlogPost = async (req, res) => {
 };
 const updateBlogPostComment = async (req, res) => {
   const { postId, commentId } = req.params;
-  return res.json({ message: `Updated Post ${postId} comment ${commentId}!` });
+  const { title, body } = req.body;
+  const updateComment = await prisma.comment.update({
+    where: {
+      id: commentId,
+    },
+    data: {
+      body: "This comment was redacted by the author of the page",
+      author_name: "redacted",
+    },
+  });
+  return res.json(updateComment);
 };
 const deleteBlogPostComment = async (req, res) => {
   const { postId, commentId } = req.params;
-  return res.json({ message: `Updated Post ${postId} comment ${commentId}!` });
+  const deleteComment = await prisma.comment.delete({
+    where: {
+      id: commentId,
+    },
+    include: {
+      post: true,
+    },
+  });
+  console.log(`comment deleted on ${deleteComment.post.title}`);
+  return res.json(deleteComment);
 };
 
 export default {
