@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 const postRouter = Router();
 
 //Public Routes
-postRouter.get("/published", postControllerPublic.getAllPublishedPosts);
+postRouter.get("/", postControllerPublic.getAllPublishedPosts);
 postRouter.get("/:postId", postControllerPublic.getIndividualPost);
 
 postRouter.get("/:postId/comments", postControllerPublic.getAllPostComments);
@@ -48,7 +48,7 @@ const addTokenToHeader = (req, res, next) => {
 postRouter.use(addTokenToHeader);
 postRouter.use(verifyToken);
 
-postRouter.get("/", postControllerPrivate.getAllPosts);
+postRouter.get("/all", postControllerPrivate.getAllPosts);
 postRouter.post("/", postControllerPrivate.createBlogPost);
 postRouter.put("/:postId", postControllerPrivate.updateBlogPost);
 postRouter.delete("/:postId", postControllerPrivate.deleteBlogPost);
