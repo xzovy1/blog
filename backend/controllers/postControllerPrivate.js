@@ -1,7 +1,11 @@
 import prisma from "../prisma/client.js";
 
 const getAllPosts = async (req, res) => {
-  const posts = await prisma.post.findMany();
+  const posts = await prisma.post.findMany({
+    include: {
+      comments: true,
+    },
+  });
   res.json(posts);
 };
 const createBlogPost = async (req, res) => {

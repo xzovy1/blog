@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 const postRouter = Router();
 
 //Public Routes
-postRouter.get("/", postControllerPublic.getAllPublishedPosts);
+postRouter.get("/published", postControllerPublic.getAllPublishedPosts);
 postRouter.get("/:postId", postControllerPublic.getIndividualPost);
 
 postRouter.get("/:postId/comments", postControllerPublic.getAllPostComments);
@@ -23,16 +23,6 @@ postRouter.get(
 );
 
 //Protected Routes
-const verifyToken = (req, res, next) => {
-  jwt.verify(req.token, process.env.JWT_KEY, (err, authData) => {
-    // console.log(authData);
-    if (err) res.sendStatus(403);
-    else {
-      next();
-    }
-  });
-};
-
 const addTokenToHeader = (req, res, next) => {
   const bearerHeader = req.headers["authorization"];
   if (typeof bearerHeader !== "undefined") {
@@ -40,15 +30,23 @@ const addTokenToHeader = (req, res, next) => {
     const token = bearer[1];
     req.token = token;
   } else {
-    res.sendStatus(403);
+    res.sendStatus(500);
   }
   next();
+};
+const verifyToken = (req, res, next) => {
+  jwt.verify(req.token, process.env.JWT_KEY, (err, authData) => {
+    if (err) res.sendStatus(403);
+    else {
+      next();
+    }
+  });
 };
 
 postRouter.use(addTokenToHeader);
 postRouter.use(verifyToken);
 
-postRouter.get("/all", postControllerPrivate.getAllPosts);
+postRouter.get("/", postControllerPrivate.getAllPosts);
 postRouter.post("/", postControllerPrivate.createBlogPost);
 postRouter.put("/:postId", postControllerPrivate.updateBlogPost);
 postRouter.delete("/:postId", postControllerPrivate.deleteBlogPost);

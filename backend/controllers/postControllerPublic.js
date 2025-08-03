@@ -15,6 +15,9 @@ const getIndividualPost = async (req, res) => {
     where: {
       id: postId,
     },
+    include: {
+      comments: true,
+    },
   });
   res.json(post);
 };
