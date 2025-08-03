@@ -1,0 +1,42 @@
+import { useParams } from "react-router-dom"
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
+const Post = () => {
+    let params = useParams();
+    const {postId} = params;
+    const [post, setPost] = useState({});
+    const [comments, setComments] = useState([])
+    useEffect(()=>{
+        fetch(`http://127.0.0.1:8000/api/posts/${postId}`)
+        .then(res => res.json())
+        .then(data => {
+            setPost(data);
+            setComments(data.comments);
+            
+        })
+    },[postId])
+    return (
+        <div>
+            <Link to="/api/posts">View more posts</Link>
+            <h1>{post.title}</h1>
+            <h5> Published: {new Date(post.published_date).toLocaleString()}</h5>
+            <h5> Updated: {new Date(post.updated_date).toLocaleString()}</h5>
+            <div>{post.body}</div>
+            <h4>Comments</h4>
+            {comments.length > 0 ? 
+            <ul>
+                {console.log(comments)}
+                {comments.map(comment => {
+                    return <li key={comment.id}>
+                        <div>{comment.body}</div>
+                        <div>-{comment.author_name}</div>
+                        <div>{new Date(comment.date).toLocaleString()}</div>
+                    </li>
+                })}
+            </ul> : <div>No comments</div>
+            }
+        </div>
+    )
+}
+export default Post

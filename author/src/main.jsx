@@ -5,11 +5,16 @@ import './index.css'
 import App from './App.jsx'
 import Login from './Login.jsx'
 import BlogPosts from './BlogPosts.jsx'
+import BlogPost from "./BlogPost.jsx"
 import ErrorPage from './ErrorPage.jsx'
 const router = createBrowserRouter([
-  {path: "/", element: <App />, errorElement: <ErrorPage />},
+  {
+    path: "/", element: <App />, 
+    errorElement: <ErrorPage />, 
+  },
   {path: "/login", element: <Login />, },
-  // {path: "/api/posts", element: <BlogPosts />},
+  {path: "/api/posts", element: <BlogPosts />},
+  {path: "/api/posts/:postId", element: <BlogPost />}
 ])
 
 createRoot(document.getElementById('root')).render(
