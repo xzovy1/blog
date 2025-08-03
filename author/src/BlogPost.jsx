@@ -18,7 +18,7 @@ const Post = () => {
     },[postId])
     return (
         <div>
-            <Link to="/api/posts">View more posts</Link>
+            <Link to="/posts">View more posts</Link>
             <h1>{post.title}</h1>
             <h5> Published: {new Date(post.published_date).toLocaleString()}</h5>
             <h5> Updated: {new Date(post.updated_date).toLocaleString()}</h5>

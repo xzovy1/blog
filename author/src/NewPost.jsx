@@ -20,7 +20,7 @@ const NewPost = () => {
                 headers: { "authorization": `bearer ${localStorage.getItem("jwt")}`, "Content-Type": "application/x-www-form-urlencoded"},
                 body: `title=${encodeURIComponent(title)}&body=${log()}`,
             }
-        ).then(navigate('/api/posts'))
+        ).then(navigate('/posts'))
     }
     const apiKey = import.meta.env.VITE_TINYMCE
     return (

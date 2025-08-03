@@ -14,9 +14,9 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />, 
   },
   {path: "/login", element: <Login />, },
-  {path: "/api/posts", element: <BlogPosts />},
-  {path: "/api/posts/new", element: <NewPost />},
-  {path: "/api/posts/:postId", element: <BlogPost />}
+  {path: "/posts", element: <BlogPosts />},
+  {path: "/posts/new", element: <NewPost />},
+  {path: "/posts/:postId", element: <BlogPost />}
 ])
 
 createRoot(document.getElementById('root')).render(

@@ -25,7 +25,7 @@ function BlogPosts() {
   return (
       <div>
         <h1>Posts</h1>
-        <Link to="/api/posts/new">Create new Post</Link>
+        <Link to="/posts/new">Create new Post</Link>
         {posts.map(post => {
           return <li key={post.id} id={post.id}>
             <Link to={post.id}>{post.title}</Link>
