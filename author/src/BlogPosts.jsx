@@ -6,7 +6,6 @@ import './App.css'
 function BlogPosts() {
   const [posts, setPosts] = useState([])
   useEffect(()=>{
-    
     fetch("http://127.0.0.1:8000/api/posts/", {
       headers: {
        authorization: `bearer ${localStorage.getItem("jwt")}` 
@@ -19,35 +18,23 @@ function BlogPosts() {
       return response.json()
     })
     .then(d => {
-      console.log(d)
      return setPosts(d)
     })
     .catch(err => console.error(err))
   }, [])
   return (
-    <>
       <div>
         <h1>Posts</h1>
+        <Link to="/api/posts/new">Create new Post</Link>
         {posts.map(post => {
-          return <div key={post.id} id={post.id}>
+          return <li key={post.id} id={post.id}>
             <Link to={post.id}>{post.title}</Link>
-            <p>{(post.published_date)}</p>
+            <p>Post Status: {post.published_status == true? "Published" : "Unpublished"}</p>
+            <p>{new Date(post.published_date).toLocaleString()}</p>
 
-            {/* <p>{post.body}</p> */}
-            {/* <h4>Comments</h4> */}
-            {/* <ul>
-              {post.comments.map(comment => {
-                return <li key={comment.id} className='comment'>
-                  <p>{comment.author_name}</p>
-                  <p>{comment.date}</p>
-                  <p>{comment.body}</p>
-                </li>
-              })}
-            </ul> */}
-            </div>
+          </li>
         })}
       </div>
-    </>
   )
 }
 

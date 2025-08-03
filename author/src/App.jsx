@@ -9,9 +9,8 @@ function App() {
   return (
     <>
       <Navbar />
-      <h1>Hello there!</h1>
-      <div>Welcome to my blog. This is where I share my thoughts and ideas.</div>
-      {/* <BlogPosts /> */}
+      <h1>Hello blog post author!</h1>
+      <div>Welcome to your blog. This is where to share your thoughts and ideas.</div>
     </>
   )
 }

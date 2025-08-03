@@ -8,7 +8,7 @@ function Login() {
         const username = formData.get("username");
         const password = formData.get("password");
         try{
-            const response = await fetch('http://127.0.0.1:8000/login', 
+            const response = await fetch(`${import.meta.env.VITE_URL}/login`, 
                 {
                     headers:{
                         "Content-Type": "application/x-www-form-urlencoded"

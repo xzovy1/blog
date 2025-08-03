@@ -8,7 +8,7 @@ const Post = () => {
     const [post, setPost] = useState({});
     const [comments, setComments] = useState([])
     useEffect(()=>{
-        fetch(`http://127.0.0.1:8000/api/posts/${postId}`)
+        fetch(`${import.meta.env.VITE_URL}/api/posts/${postId}`)
         .then(res => res.json())
         .then(data => {
             setPost(data);
@@ -26,7 +26,6 @@ const Post = () => {
             <h4>Comments</h4>
             {comments.length > 0 ? 
             <ul>
-                {console.log(comments)}
                 {comments.map(comment => {
                     return <li key={comment.id}>
                         <div>{comment.body}</div>
