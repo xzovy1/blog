@@ -1,4 +1,4 @@
-import { Form, useNavigate } from "react-router-dom";
+import { Form, useNavigate, Link } from "react-router-dom";
 import { useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 const NewPost = () => {
@@ -26,6 +26,7 @@ const NewPost = () => {
     const apiKey = import.meta.env.VITE_TINYMCE
     return (
         <div>
+            <Link to="/posts">Back to posts</Link>
             <h1>Create an Article:</h1>
             <Form onSubmit={submitPost} method="post">
             <label htmlFor="title">Title:</label>

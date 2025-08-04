@@ -44,3 +44,10 @@
 ul{
   padding: 0;
 }
+
+.post{
+  background-color: rgb(83, 83, 83);
+  padding: 1rem;
+  margin: 1rem;
+  
+}
