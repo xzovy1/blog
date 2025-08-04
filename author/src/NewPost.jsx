@@ -14,7 +14,6 @@ const NewPost = () => {
         const form = e.target;
         const formData = new FormData(form);
         const title = formData.get("title");
-        console.log(log())
         await fetch(`${import.meta.env.VITE_URL}/api/posts`, 
             {
                 method: "post", 
@@ -29,8 +28,8 @@ const NewPost = () => {
             <Link to="/posts">Back to posts</Link>
             <h1>Create an Article:</h1>
             <Form onSubmit={submitPost} method="post">
-            <label htmlFor="title">Title:</label>
-            <input type="text" name="title" id="title" />
+                <label htmlFor="title">Title:</label>
+                <input type="text" name="title" id="title" />
                 <Editor
                     id="body"
                     name="body"

@@ -42,7 +42,7 @@ function BlogPosts() {
           return post.id === postId ? {...post, publishedStatus: newStatus} : post
         })
       })
-      e.target.blur()
+      e.target.blur();
     }catch(err){
       console.error(err);
     }

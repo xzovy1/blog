@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import parse from 'html-react-parser'
+import CommentForm from "./CommentForm";
 
 const Post = () => {
     let params = useParams();
@@ -16,12 +17,15 @@ const Post = () => {
             setPost({...data, body: parse(data.body)});
             setComments(data.comments);
             
-            
         })
     },[postId])
     return (
         <div>
-            <Link to="/posts">View more posts</Link>
+                <Link to="/posts">View more posts</Link>
+            <div>
+                <button>Delete Post</button>
+                <button>Edit Post</button>
+            </div>
             <h1>{post.title}</h1>
             <h5> Published: {new Date(post.published_date).toLocaleString()}</h5>
             <h5> Updated: {new Date(post.updated_date).toLocaleString()}</h5>
@@ -38,6 +42,7 @@ const Post = () => {
                 })}
             </ul> : <div>No comments</div>
             }
+            <CommentForm setComments={setComments} comments={comments}/>
         </div>
     )
 }
