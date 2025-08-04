@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import parse from 'html-react-parser'
 
 const Post = () => {
     let params = useParams();
@@ -11,8 +12,10 @@ const Post = () => {
         fetch(`${import.meta.env.VITE_URL}/api/posts/${postId}`)
         .then(res => res.json())
         .then(data => {
-            setPost(data);
+            
+            setPost({...data, body: parse(data.body)});
             setComments(data.comments);
+            
             
         })
     },[postId])

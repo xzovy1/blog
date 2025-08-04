@@ -1,9 +1,5 @@
-import { Outlet, Link } from 'react-router-dom'
 import './App.css'
-import BlogPosts from './BlogPosts'
-import Login from './Login'
 import Navbar from './Navbar'
-import { useState, useEffect } from 'react'
 
 function App() {
   return (

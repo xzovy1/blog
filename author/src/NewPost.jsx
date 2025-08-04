@@ -5,7 +5,7 @@ const NewPost = () => {
     const editorRef = useRef(null);
     const log = () => {
         if (editorRef.current){
-            return editorRef.current.getContent({format: 'text'})
+            return editorRef.current.getContent() //optional: {format: 'text'}
         }
     }
     const navigate = useNavigate();
@@ -14,6 +14,7 @@ const NewPost = () => {
         const form = e.target;
         const formData = new FormData(form);
         const title = formData.get("title");
+        console.log(log())
         await fetch(`${import.meta.env.VITE_URL}/api/posts`, 
             {
                 method: "post", 
