@@ -5,6 +5,9 @@ const getAllPosts = async (req, res) => {
     include: {
       comments: true,
     },
+    orderBy: {
+      published_date: "desc",
+    },
   });
   res.json(posts);
 };
