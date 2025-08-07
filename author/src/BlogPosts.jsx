@@ -20,10 +20,11 @@ function BlogPosts() {
       return response.json()
     })
     .then(d => {
+      console.log(d)
       return setPosts(d)
     })
     .catch(err => console.error(err))
-  })
+  }, []) // configure dependency so that its only fetched at the first render and anytime handle publish is called
 
 
   const handlePublish = async (postId, currentStatus, e) =>{

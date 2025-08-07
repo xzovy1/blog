@@ -1,10 +1,11 @@
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import parse from 'html-react-parser'
 import CommentForm from "./CommentForm";
 
 const Post = () => {
+    const navigate = useNavigate();
     let params = useParams();
     const {postId} = params;
     const [post, setPost] = useState({});
@@ -19,11 +20,26 @@ const Post = () => {
             
         })
     },[postId])
+
+    const deletePost = async () => {
+        if(confirm('Delete post?')){
+            const response = await fetch(`${import.meta.env.VITE_URL}/api/posts/${postId}`,
+                {
+                method: "delete",
+                headers: { "authorization": `bearer ${localStorage.getItem("jwt")}`},
+                }
+            )
+            if(!response.ok){throw new Error(`HTTP error. Status: ${response.status}`)}
+            const data =  response.json();
+            console.log(data)
+            navigate('/posts')
+        }
+    }
     return (
         <div>
                 <Link to="/posts">View more posts</Link>
             <div>
-                <button>Delete Post</button>
+                <button onClick={deletePost}>Delete Post</button>
                 <button>Edit Post</button>
             </div>
             <h1>{post.title}</h1>

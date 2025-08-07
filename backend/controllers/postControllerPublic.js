@@ -5,6 +5,9 @@ const getAllPublishedPosts = async (req, res) => {
     where: {
       published_status: true,
     },
+    orderBy: {
+      published_date: "desc",
+    },
   });
   res.json(posts);
 };
