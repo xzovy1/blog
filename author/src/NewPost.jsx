@@ -13,7 +13,9 @@ const NewPost = () => {
         e.preventDefault();
         const form = e.target;
         const formData = new FormData(form);
-        const title = formData.get("title");
+        let title = formData.get("title");
+        if(title == ''){title = new Date().toLocaleDateString()};
+        console.log(title)
         await fetch(`${import.meta.env.VITE_URL}/api/posts`, 
             {
                 method: "post", 
@@ -29,7 +31,7 @@ const NewPost = () => {
             <h1>Create an Article:</h1>
             <Form onSubmit={submitPost} method="post">
                 <label htmlFor="title">Title:</label>
-                <input type="text" name="title" id="title" />
+                <input type="text" name="title" id="title"/>
                 <Editor
                     id="body"
                     name="body"

@@ -24,10 +24,22 @@ function BlogPosts() {
       return setPosts(d)
     })
     .catch(err => console.error(err))
-  }, []) // configure dependency so that its only fetched at the first render and anytime handle publish is called
-
-
-  const handlePublish = async (postId, currentStatus, e) =>{
+  }, [])
+  return (
+      <div>
+        <h1>Posts</h1>
+        <Link to="/posts/new">Create new Post</Link>
+        {posts.map(post => {
+          return <li key={post.id} id={post.id} className='post'>
+           <PostInfo post={post} setPosts={setPosts}/>
+          </li>
+        })}
+      </div>
+  )
+}
+const PostInfo = ({post, setPosts}) => {
+  const [buttonText, setButtonText] = useState(post.published_status == false? "Publish" : "Unpublish");
+    const handlePublish = async (postId, currentStatus, e) =>{
     const newStatus = !currentStatus
     try{
       await fetch(`${import.meta.env.VITE_URL}/api/posts/${postId}`,
@@ -37,30 +49,25 @@ function BlogPosts() {
           body: `publishedStatus=${newStatus}`
         }
       )
-      
       setPosts(previousPosts => {
         return previousPosts.map(post => {
           return post.id === postId ? {...post, publishedStatus: newStatus} : post
         })
       })
+      post.published_status = newStatus //changes post status to re-render component
+      setButtonText(post.published_status == false? "Publish" : "Unpublish")
       e.target.blur();
+      
     }catch(err){
       console.error(err);
     }
     }
-
-  return (
-      <div>
-        <h1>Posts</h1>
-        <Link to="/posts/new">Create new Post</Link>
-        {posts.map(post => {
-          return <li key={post.id} id={post.id} className='post'>
-            <Link to={post.id}>{post.title}</Link>
-            <p>{new Date(post.published_date).toLocaleString()}</p>
-              <button onClick={(e)=>handlePublish(post.id, post.published_status, e)}>{post.published_status == false? "Publish" : "Unpublish"}</button>
-          </li>
-        })}
-      </div>
+  return(
+    <>
+      <Link to={post.id}>{post.title}</Link>
+      <p>{new Date(post.published_date).toLocaleString()}</p>
+      <button onClick={(e)=>handlePublish(post.id, post.published_status, e)}>{buttonText}</button>
+    </>
   )
 }
 
