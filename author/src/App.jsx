@@ -6,21 +6,21 @@ import { Link } from 'react-router-dom'
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  useEffect(()=>{
-    try{
-        fetch(`${import.meta.env.VITE_URL}/api/posts/`, {
-          headers: {
-            authorization: `bearer ${localStorage.getItem("jwt")}` 
-          }
-        }).then(response => {
-          if(response.ok){setIsAuthenticated(true)}
-        })
-    }catch(e){
+  useEffect(() => {
+    try {
+      fetch(`${import.meta.env.VITE_URL}/api/posts/`, {
+        headers: {
+          authorization: `bearer ${localStorage.getItem("jwt")}`
+        }
+      }).then(response => {
+        if (response.ok) { setIsAuthenticated(true) }
+      })
+    } catch (e) {
       console.error(e)
     }
-  },[])
+  }, [])
 
-  if(isAuthenticated){
+  if (isAuthenticated) {
     return (
       <>
         <h1>Hello, author!</h1>
@@ -29,13 +29,13 @@ function App() {
         <Logout />
       </>
     )
-  }else{
-    return(
+  } else {
+    return (
 
-    <>
-      <h1>Looks like there is nothing here.</h1>
-      <Link to="/login">Login</Link>
-    </>
+      <>
+        <h1>Looks like there is nothing here.</h1>
+        <Link to="/login">Login</Link>
+      </>
     )
   }
 }

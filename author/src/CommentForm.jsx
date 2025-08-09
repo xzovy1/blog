@@ -1,19 +1,19 @@
 import { Form } from "react-router-dom"
 import { useParams } from "react-router-dom";
-const CommentForm = ({setComments, comments}) => {
+const CommentForm = ({ setComments, comments }) => {
     let params = useParams();
-    const {postId} = params;
-    
-    async function submitComment (formData) {
+    const { postId } = params;
+
+    async function submitComment(formData) {
         const body = formData.get("body");
         let comment;
-        try{
+        try {
 
             await fetch(`${import.meta.env.VITE_URL}/api/posts/${postId}/comments`,
                 {
-                    headers: { "authorization": `bearer ${localStorage.getItem("jwt")}`, "Content-Type": "application/x-www-form-urlencoded"},
+                    headers: { "authorization": `bearer ${localStorage.getItem("jwt")}`, "Content-Type": "application/x-www-form-urlencoded" },
                     body: `body=${encodeURIComponent(body)}&author=author`,
-                    method: "post", 
+                    method: "post",
                     mode: "cors"
                 }
             ).then(r => r.json()).then(d => comment = d);
@@ -21,7 +21,7 @@ const CommentForm = ({setComments, comments}) => {
             setComments([
                 comment,
                 ...comments])
-        }catch(err){
+        } catch (err) {
             console.error(err);
         }
 

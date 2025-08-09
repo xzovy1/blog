@@ -7,67 +7,67 @@ function BlogPosts() {
 
   const [posts, setPosts] = useState([]);
 
-  useEffect(()=>{
+  useEffect(() => {
     fetch(`${import.meta.env.VITE_URL}/api/posts/`, {
       headers: {
-       authorization: `bearer ${localStorage.getItem("jwt")}` 
+        authorization: `bearer ${localStorage.getItem("jwt")}`
       }
     })
-    .then((response) =>{
-      if(response.status >= 403){
-        throw new Error("server error");
-      }
-      return response.json()
-    })
-    .then(d => {
-      return setPosts(d)
-    })
-    .catch(err => console.error(err))
+      .then((response) => {
+        if (response.status >= 400) {
+          throw new Error("server error");
+        }
+        return response.json()
+      })
+      .then(d => {
+        return setPosts(d)
+      })
+      .catch(err => console.error("ERRORED!!!", err))
   }, [])
   return (
-      <div>
-        <h1>Posts</h1>
-        <Link to="/posts/new">Create new Post</Link>
-        <br />
-        <Link to="/">Go Home</Link>
-        {posts.map(post => {
-          return <li key={post.id} id={post.id} className='post'>
-           <PostInfo post={post} setPosts={setPosts}/>
-          </li>
-        })}
-      </div>
+    <div>
+      <h1>Posts</h1>
+      <Link to="/posts/new">Create new Post</Link>
+      <br />
+      <Link to="/">Go Home</Link>
+      {posts.map(post => {
+        return <li key={post.id} id={post.id} className='post'>
+          <PostInfo post={post} setPosts={setPosts} />
+        </li>
+      })}
+    </div>
   )
 }
-const PostInfo = ({post, setPosts}) => {
-  const [buttonText, setButtonText] = useState(post.published_status == false? "Publish" : "Unpublish");
-    const handlePublish = async (postId, currentStatus, e) =>{
+const PostInfo = ({ post, setPosts }) => {
+  const [buttonText, setButtonText] = useState(post.published_status == false ? "Publish" : "Unpublish");
+  const handlePublish = async (postId, currentStatus, e) => {
     const newStatus = !currentStatus
-    try{
+    try {
       await fetch(`${import.meta.env.VITE_URL}/api/posts/${postId}`,
         {
           method: "put",
-          headers: { "authorization": `bearer ${localStorage.getItem("jwt")}`, "Content-Type": "application/x-www-form-urlencoded"},
+          headers: { "authorization": `bearer ${localStorage.getItem("jwt")}`, "Content-Type": "application/x-www-form-urlencoded" },
           body: `publishedStatus=${newStatus}`
         }
       )
       setPosts(previousPosts => {
         return previousPosts.map(post => {
-          return post.id === postId ? {...post, publishedStatus: newStatus} : post
+          return post.id === postId ? { ...post, publishedStatus: newStatus } : post
         })
       })
       post.published_status = newStatus //changes post status to re-render component
-      setButtonText(post.published_status == false? "Publish" : "Unpublish")
+      setButtonText(post.published_status == false ? "Publish" : "Unpublish")
       e.target.blur();
-      
-    }catch(err){
+
+    } catch (err) {
       console.error(err);
     }
-    }
-  return(
+  }
+  return (
     <>
       <Link to={post.id}>{post.title}</Link>
       <p>{new Date(post.published_date).toLocaleString()}</p>
-      <button onClick={(e)=>handlePublish(post.id, post.published_status, e)}>{buttonText}</button>
+      <button onClick={(e) => handlePublish(post.id, post.published_status, e)}>{buttonText}</button>
     </>
   )
 }
