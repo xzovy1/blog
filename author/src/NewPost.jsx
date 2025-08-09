@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 const NewPost = () => {
     const editorRef = useRef(null);
+    
     const log = () => {
         if (editorRef.current){
             return editorRef.current.getContent() //optional: {format: 'text'}
@@ -15,7 +16,6 @@ const NewPost = () => {
         const formData = new FormData(form);
         let title = formData.get("title");
         if(title == ''){title = new Date().toLocaleDateString()};
-        console.log(title)
         await fetch(`${import.meta.env.VITE_URL}/api/posts`, 
             {
                 method: "post", 

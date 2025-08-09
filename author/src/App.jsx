@@ -10,10 +10,9 @@ function App() {
     try{
         fetch(`${import.meta.env.VITE_URL}/api/posts/`, {
           headers: {
-          authorization: `bearer ${localStorage.getItem("jwt")}` 
+            authorization: `bearer ${localStorage.getItem("jwt")}` 
           }
         }).then(response => {
-          console.log(response)
           if(response.ok){setIsAuthenticated(true)}
         })
     }catch(e){

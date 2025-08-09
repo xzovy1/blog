@@ -34,7 +34,6 @@ const CommentForm = ({setComments, comments}) => {
                 <textarea name="body" id="comment-body" cols={25} rows={5} placeholder="share your thoughts"></textarea>
                 <button type="submit">Submit</button>
             </form>
-
         </div>
     )
 }
