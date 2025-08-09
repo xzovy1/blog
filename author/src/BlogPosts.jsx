@@ -8,7 +8,7 @@ function BlogPosts() {
   const [posts, setPosts] = useState([]);
 
   useEffect(()=>{
-    fetch("http://127.0.0.1:8000/api/posts/", {
+    fetch(`${import.meta.env.VITE_URL}/api/posts/`, {
       headers: {
        authorization: `bearer ${localStorage.getItem("jwt")}` 
       }

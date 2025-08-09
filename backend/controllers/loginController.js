@@ -29,23 +29,35 @@ passport.use(
 );
 
 const login = async (req, res, next) => {
-  passport.authenticate("local", (err, user, info) => {
-    if (err) return next(err);
-    if (!user) return res.json({ message: "Incorrect Username or Password" });
-
-    jwt.sign(
-      { user },
-      process.env.JWT_KEY,
-      // { expiresIn: "30" },
-      (err, token) => {
-        //save token to localStorage.
-        console.log(token);
-        res.json({
-          token,
-        });
-      }
-    );
-  })(req, res, next);
+  passport.authenticate(
+    "local",
+    { failureRedirect: "/login", successRedirect: "/posts" },
+    (err, user, info) => {
+      console.log(info);
+      if (err) return next(err);
+      if (!user) return res.json({ message: "Incorrect Username or Password" });
+      jwt.sign(
+        { user },
+        process.env.JWT_KEY,
+        { expiresIn: "1d" },
+        (err, token) => {
+          // console.log(token);
+          res.json({
+            token,
+          });
+        }
+      );
+      req.app.locals.logout = req.logout;
+    }
+  )(req, res, next);
 };
 
-export default { login };
+const logout = async (req, res, next) => {
+  req.app.locals.logout((err) => {
+    if (err) return next(err);
+
+    res.send({ message: "logged out" });
+  });
+};
+
+export default { login, logout };

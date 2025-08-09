@@ -8,7 +8,7 @@ app.use(cors());
 app.use(urlencoded({ extended: true }));
 
 app.use("/api/posts", routes.postRouter);
-app.use("/login", routes.loginRouter);
+app.use("/", routes.loginRouter);
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => {
