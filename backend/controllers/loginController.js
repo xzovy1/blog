@@ -31,11 +31,14 @@ passport.use(
 const login = async (req, res, next) => {
   passport.authenticate(
     "local",
-    { failureRedirect: "/login", successRedirect: "/posts" },
+    { failureRedirect: "/login", successRedirect: "/" },
     (err, user, info) => {
       console.log(info);
       if (err) return next(err);
-      if (!user) return res.json({ message: "Incorrect Username or Password" });
+      if (!user)
+        return res
+          .json({ message: "Incorrect Username or Password" })
+          .sendStatus(401);
       jwt.sign(
         { user },
         process.env.JWT_KEY,

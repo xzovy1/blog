@@ -20,7 +20,6 @@ function BlogPosts() {
       return response.json()
     })
     .then(d => {
-      console.log(d)
       return setPosts(d)
     })
     .catch(err => console.error(err))
