@@ -46,7 +46,7 @@ ul{
 }
 
 .post{
-  background-color: rgb(83, 83, 83);
+  background-color: rgba(83, 83, 83, 0.369);
   padding: 1rem;
   margin: 1rem;
   

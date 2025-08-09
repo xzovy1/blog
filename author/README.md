@@ -7,3 +7,8 @@ contains:
 - show all posts and publish status
   - able to toggle posts published/unpublished
 - edit posts and comments
+
+### Environment Varibles
+
+- VITE_TINYMCE
+- VITE_URL (backend)

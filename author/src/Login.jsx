@@ -18,6 +18,7 @@ function Login() {
                 })
             if(!response.ok) throw new Error(`HTTP error. status: ${response.status}`)
             const data = await response.json();
+        console.log(data)
             if(data.token){
                 localStorage.setItem("jwt", data.token);
                 navigate('/');
@@ -37,9 +38,8 @@ function Login() {
                 <input type="text" name="username" id="username" value="author"/>
                 <label htmlFor="password">Password</label>
                 <input type="password" name="password" id="password" value="admin"/>
-                <input type="submit" />
+                <button>Login</button>
             </form>
-            {/* <NavLink to='/api/posts'>All Posts</NavLink> */}
         </div>
     )
 

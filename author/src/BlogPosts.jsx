@@ -28,6 +28,8 @@ function BlogPosts() {
       <div>
         <h1>Posts</h1>
         <Link to="/posts/new">Create new Post</Link>
+        <br />
+        <Link to="/">Go Home</Link>
         {posts.map(post => {
           return <li key={post.id} id={post.id} className='post'>
            <PostInfo post={post} setPosts={setPosts}/>

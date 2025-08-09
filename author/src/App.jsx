@@ -13,6 +13,7 @@ function App() {
           authorization: `bearer ${localStorage.getItem("jwt")}` 
           }
         }).then(response => {
+          console.log(response)
           if(response.ok){setIsAuthenticated(true)}
         })
     }catch(e){
@@ -23,7 +24,7 @@ function App() {
   if(isAuthenticated){
     return (
       <>
-        <h1>Hello blog post author!</h1>
+        <h1>Hello, author!</h1>
         <div>Welcome to your blog. This is where you can share your thoughts and ideas.</div>
         <Navbar />
         <Logout />
@@ -32,7 +33,7 @@ function App() {
   }else{
     return(
 
-      <>
+    <>
       <h1>Looks like there is nothing here.</h1>
       <Link to="/login">Login</Link>
     </>
