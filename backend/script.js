@@ -19,9 +19,7 @@ const dummyPosts = [
 ];
 
 async function main() {
-  const script = await prisma.post.create({
-    data: {},
-  });
+  const script = await prisma.author.findMany();
   console.log(script);
 }
 

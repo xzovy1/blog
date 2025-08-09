@@ -33,7 +33,6 @@ const login = async (req, res, next) => {
     "local",
     { failureRedirect: "/login", successRedirect: "/" },
     (err, user, info) => {
-      console.log(info);
       if (err) return next(err);
       if (!user)
         return res
@@ -44,7 +43,6 @@ const login = async (req, res, next) => {
         process.env.JWT_KEY,
         { expiresIn: "1d" },
         (err, token) => {
-          // console.log(token);
           res.json({
             token,
           });
