@@ -1,3 +1,4 @@
+import ErrorPage from './ErrorPage';
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './App.css'
@@ -6,6 +7,8 @@ import './App.css'
 function BlogPosts() {
 
   const [posts, setPosts] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_URL}/api/posts/`, {
@@ -19,11 +22,12 @@ function BlogPosts() {
         }
         return response.json()
       })
-      .then(d => {
-        return setPosts(d)
-      })
-      .catch(err => console.error("ERRORED!!!", err))
+      .then(data => setPosts(data))
+      .catch(err => setError(err))
+      .finally(() => setLoading(false))
   }, [])
+  if (loading) { return <h1>Loading...</h1> }
+  if (error) { return <ErrorPage /> }
   return (
     <div>
       <h1>Posts</h1>

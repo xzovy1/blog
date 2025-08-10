@@ -1,3 +1,4 @@
+import ErrorPage from "./ErrorPage";
 import CommentForm from "./CommentForm";
 import parse from 'html-react-parser'
 import { useNavigate, useParams } from "react-router-dom"
@@ -12,15 +13,23 @@ const Post = () => {
     let params = useParams();
     const { postId } = params;
     const [post, setPost] = useState({ body: "" });
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
     const [comments, setComments] = useState([]);
     const [commenting, setCommenting] = useState(false);
     useEffect(() => {
         fetch(`${import.meta.env.VITE_URL}/api/posts/${postId}`)
             .then(res => res.json())
             .then(data => {
+                if (data.status >= 400) {
+                    throw new Error("server error");
+                }
                 setPost({ ...data, body: data.body });
                 setComments(data.comments);
             })
+            .catch(e => setError(e))
+            .finally(() => setLoading(false))
+
     }, [postId])
 
     const deletePost = async () => {
@@ -37,12 +46,14 @@ const Post = () => {
             navigate('/posts')
         }
     }
+    if (loading) { return <h1>Loading...</h1> }
+    if (error) { return <ErrorPage /> }
     return (
         <div>
             <Link to="/posts">View more posts</Link>
             <div>
                 <button onClick={deletePost}>Delete Post</button>
-                <button onClick={(e) => {setEditing(!editing); e.target.blur()}}>{!editing ? "Edit Post" : "Cancel Edit"}</button>
+                <button onClick={(e) => { setEditing(!editing); e.target.blur() }}>{!editing ? "Edit Post" : "Cancel Edit"}</button>
             </div>
             <h1>{post.title}</h1>
             <h5> Published: {new Date(post.published_date).toLocaleString()}</h5>

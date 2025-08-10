@@ -2,7 +2,7 @@ import './App.css'
 import Logout from './Logout'
 import Navbar from './Navbar'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import Login from './Login'
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -30,13 +30,7 @@ function App() {
       </>
     )
   } else {
-    return (
-
-      <>
-        <h1>Looks like there is nothing here.</h1>
-        <Link to="/login">Login</Link>
-      </>
-    )
+    return <Login />
   }
 }
 
