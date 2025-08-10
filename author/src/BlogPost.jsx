@@ -75,8 +75,10 @@ const Post = () => {
                     })}
                 </ul> : <div>No comments</div>
             }
-            <button>Add Comment</button>
-            <CommentForm setComments={setComments} comments={comments} />
+            {!commenting ?
+                <button onClick={() => setCommenting(true)}>Add Comment</button> :
+                <CommentForm setComments={setComments} comments={comments} setCommenting={setCommenting} />
+            }
         </div>
     )
 }

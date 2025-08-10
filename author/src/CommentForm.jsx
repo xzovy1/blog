@@ -1,6 +1,6 @@
 import { Form } from "react-router-dom"
 import { useParams } from "react-router-dom";
-const CommentForm = ({ setComments, comments }) => {
+const CommentForm = ({ setComments, comments, setCommenting }) => {
     let params = useParams();
     const { postId } = params;
 
@@ -33,6 +33,12 @@ const CommentForm = ({ setComments, comments }) => {
                 <label htmlFor="comment-body"></label>
                 <textarea name="body" id="comment-body" cols={25} rows={5} placeholder="share your thoughts"></textarea>
                 <button type="submit">Submit</button>
+                <button onClick={(e) => {
+                    e.preventDefault();
+                    setCommenting(false);
+                }}>
+                    Cancel
+                </button>
             </form>
         </div>
     )
