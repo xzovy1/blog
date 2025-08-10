@@ -1,8 +1,8 @@
+import CommentForm from "./CommentForm";
+import parse from 'html-react-parser'
 import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react";
 import { Link, Form } from "react-router-dom";
-import parse from 'html-react-parser'
-import CommentForm from "./CommentForm";
 import { useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 
@@ -12,15 +12,14 @@ const Post = () => {
     let params = useParams();
     const { postId } = params;
     const [post, setPost] = useState({ body: "" });
-    const [comments, setComments] = useState([])
+    const [comments, setComments] = useState([]);
+    const [commenting, setCommenting] = useState(false);
     useEffect(() => {
         fetch(`${import.meta.env.VITE_URL}/api/posts/${postId}`)
             .then(res => res.json())
             .then(data => {
-
                 setPost({ ...data, body: data.body });
                 setComments(data.comments);
-
             })
     }, [postId])
 
@@ -38,36 +37,33 @@ const Post = () => {
             navigate('/posts')
         }
     }
-    const toggleEdit = () => {
-        return setEditing(!editing);
-    }
     return (
         <div>
             <Link to="/posts">View more posts</Link>
             <div>
                 <button onClick={deletePost}>Delete Post</button>
-                <button onClick={() => setEditing(!editing)}>{!editing ? "Edit Post" : "Cancel Edit"}</button>
+                <button onClick={(e) => {setEditing(!editing); e.target.blur()}}>{!editing ? "Edit Post" : "Cancel Edit"}</button>
             </div>
             <h1>{post.title}</h1>
             <h5> Published: {new Date(post.published_date).toLocaleString()}</h5>
             <h5> Updated: {new Date(post.updated_date).toLocaleString()}</h5>
 
-            <div>
+            <div id="blogPostBody">
                 {!editing ? <div>{parse(post.body)}</div> : <UpdateForm post={post} setPost={setPost} setEditing={setEditing} />}
-
             </div>
             <h4>Comments</h4>
             {comments.length > 0 ?
                 <ul>
                     {comments.map(comment => {
-                        return <li key={comment.id}>
+                        return <li key={comment.id} className="comment">
+                            <span>{comment.author_name}:</span>
                             <div>{comment.body}</div>
-                            <div>-{comment.author_name}</div>
                             <div>{new Date(comment.date).toLocaleString()}</div>
                         </li>
                     })}
                 </ul> : <div>No comments</div>
             }
+            <button>Add Comment</button>
             <CommentForm setComments={setComments} comments={comments} />
         </div>
     )

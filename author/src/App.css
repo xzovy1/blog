@@ -46,11 +46,24 @@
 
 ul {
   padding: 0;
+  list-style: none;
 }
 
 .post {
   background-color: rgba(83, 83, 83, 0.369);
   padding: 1rem;
   margin: 1rem;
+}
 
+#blogPostBody{
+  width: 496px;
+  height: 606px;
+  background-color: rgba(60, 60, 60, 0.705);
+  border-radius: 5px;
+}
+
+.comment {
+  margin: 1rem;
+  background-color: rgba(60, 60, 60, 0.705);
+  border-radius: 5px;
 }
