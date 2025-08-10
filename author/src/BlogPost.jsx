@@ -1,5 +1,5 @@
 import ErrorPage from "./ErrorPage";
-import CommentForm from "./CommentForm";
+import Comments from "./Comments";
 import parse from 'html-react-parser'
 import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react";
@@ -16,7 +16,7 @@ const Post = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
     const [comments, setComments] = useState([]);
-    const [commenting, setCommenting] = useState(false);
+
     useEffect(() => {
         fetch(`${import.meta.env.VITE_URL}/api/posts/${postId}`)
             .then(res => res.json())
@@ -63,22 +63,7 @@ const Post = () => {
             <div id="blogPostBody">
                 {!editing ? <div>{parse(post.body)}</div> : <UpdateForm post={post} setPost={setPost} setEditing={setEditing} />}
             </div>
-            <h4>Comments</h4>
-            {comments.length > 0 ?
-                <ul>
-                    {comments.map(comment => {
-                        return <li key={comment.id} className="comment">
-                            <span>{comment.author_name}:</span>
-                            <div>{comment.body}</div>
-                            <div>{new Date(comment.date).toLocaleString()}</div>
-                        </li>
-                    })}
-                </ul> : <div>No comments</div>
-            }
-            {!commenting ?
-                <button onClick={() => setCommenting(true)}>Add Comment</button> :
-                <CommentForm setComments={setComments} comments={comments} setCommenting={setCommenting} />
-            }
+            <Comments comments={comments} setComments={setComments} />
         </div>
     )
 }
@@ -97,7 +82,6 @@ const UpdateForm = ({ post, setPost, setEditing }) => {
         const formData = new FormData(form);
         let title = formData.get("title");
         if (title == '') { title = new Date().toLocaleDateString() };
-        console.log(title)
         await fetch(`${import.meta.env.VITE_URL}/api/posts/${post.id}`,
             {
                 method: "put",
@@ -110,7 +94,7 @@ const UpdateForm = ({ post, setPost, setEditing }) => {
                 setEditing(false);
                 setPost(d);
             })
-            .catch(error => setError(true))
+            .catch(error => setError(error))
 
     }
     const apiKey = import.meta.env.VITE_TINYMCE;

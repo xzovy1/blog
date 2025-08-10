@@ -13,12 +13,12 @@ postRouter.get("/:postId/comments", postControllerPublic.getAllPostComments);
 postRouter.post("/:postId/comments", postControllerPublic.createComment);
 
 postRouter.get(
-  "/:postId/:commentId",
+  "/comments/:commentId",
   postControllerPublic.getIndividualComment
 );
-postRouter.post("/:postId/:commentId", postControllerPublic.createCommentReply);
+postRouter.post("/comments/:commentId", postControllerPublic.createCommentReply);
 postRouter.get(
-  "/:commentId/replies",
+  "/comments/:commentId/replies",
   postControllerPublic.getAllCommentReplies
 );
 

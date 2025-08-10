@@ -33,6 +33,7 @@ const getAllPostComments = async (req, res) => {
     },
     include: {
       comments: true,
+      replies: true,
     },
   });
   if (!post.comments) res.json({ message: `${post.title} has no comments` });
@@ -82,7 +83,7 @@ const getAllCommentReplies = async (req, res) => {
 };
 
 const createCommentReply = async (req, res) => {
-  const { postId, commentId } = req.params;
+  const { commentId } = req.params;
   const { body, author } = req.body;
   const reply = await prisma.reply.create({
     data: {

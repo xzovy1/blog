@@ -1,5 +1,5 @@
-import { Form } from "react-router-dom"
 import { useParams } from "react-router-dom";
+
 const CommentForm = ({ setComments, comments, setCommenting }) => {
     let params = useParams();
     const { postId } = params;
@@ -24,7 +24,6 @@ const CommentForm = ({ setComments, comments, setCommenting }) => {
         } catch (err) {
             console.error(err);
         }
-
     }
 
     return (

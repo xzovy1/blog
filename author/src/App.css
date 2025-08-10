@@ -50,12 +50,12 @@ ul {
 }
 
 .post {
-  background-color: rgba(83, 83, 83, 0.369);
+  background-color: rgba(111, 111, 111, 0.17);
   padding: 1rem;
   margin: 1rem;
 }
 
-#blogPostBody{
+#blogPostBody {
   width: 496px;
   height: 606px;
   background-color: rgba(60, 60, 60, 0.705);
