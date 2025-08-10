@@ -34,11 +34,13 @@ function BlogPosts() {
       <Link to="/posts/new">Create new Post</Link>
       <br />
       <Link to="/">Go Home</Link>
-      {posts.map(post => {
-        return <div key={post.id} id={post.id} className='post'>
-          <PostInfo post={post} setPosts={setPosts} />
-        </div>
-      })}
+      {posts.length == 0 ? <p>No posts found</p> :
+
+        posts.map(post => {
+          return <div key={post.id} id={post.id} className='post'>
+            <PostInfo post={post} setPosts={setPosts} />
+          </div>
+        })}
     </div>
   )
 }

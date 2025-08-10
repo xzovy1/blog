@@ -40,8 +40,6 @@ const Post = () => {
             ).then(response => {
                 if (!response.ok) { throw new Error(`HTTP error. Status: ${response.status}`) }
             }).catch(error => setError(error))
-            const data = response.json();
-            console.log(data)
             navigate('/posts')
         }
     }
