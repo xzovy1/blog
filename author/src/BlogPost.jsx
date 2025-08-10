@@ -39,8 +39,9 @@ const Post = () => {
                     method: "delete",
                     headers: { "authorization": `bearer ${localStorage.getItem("jwt")}` },
                 }
-            )
-            if (!response.ok) { throw new Error(`HTTP error. Status: ${response.status}`) }
+            ).then(response => {
+                if (!response.ok) { throw new Error(`HTTP error. Status: ${response.status}`) }
+            }).catch(error => setError(error))
             const data = response.json();
             console.log(data)
             navigate('/posts')
@@ -82,6 +83,7 @@ const Post = () => {
 const UpdateForm = ({ post, setPost, setEditing }) => {
     const editorRef = useRef(null);
     const [title, setTitle] = useState(post.title);
+    const [error, setError] = useState(null)
     const log = () => {
         if (editorRef.current) {
             return editorRef.current.getContent() //optional: {format: 'text'}
@@ -103,13 +105,14 @@ const UpdateForm = ({ post, setPost, setEditing }) => {
         )
             .then(r => r.json())
             .then(d => {
-                console.log(d)
                 setEditing(false);
                 setPost(d);
             })
+            .catch(error => setError(true))
 
     }
     const apiKey = import.meta.env.VITE_TINYMCE;
+    if (error) { return <ErrorPage /> }
     return (
         <Form onSubmit={updatePost} method="put">
             <label htmlFor="title">Title:</label>
