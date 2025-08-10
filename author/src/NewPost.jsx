@@ -3,7 +3,6 @@ import { useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 const NewPost = () => {
     const editorRef = useRef(null);
-
     const log = () => {
         if (editorRef.current) {
             return editorRef.current.getContent() //optional: {format: 'text'}

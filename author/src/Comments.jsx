@@ -62,7 +62,6 @@ const Replies = ({ replies }) => {
     const [error, setError] = useState(null)
     const [commentReplies, setCommentReplies] = useState(replies);
 
-
     const deleteReply = async (id) => {
         console.log(id)
         if (confirm('Delete reply?')) {
@@ -89,8 +88,5 @@ const Replies = ({ replies }) => {
             <button onClick={() => deleteReply(reply.id)}>Delete</button>
         </div>
     })
-
 }
-
-
 export default Comments

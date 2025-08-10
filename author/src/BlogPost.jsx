@@ -28,7 +28,6 @@ const Post = () => {
             })
             .catch(e => setError(e))
             .finally(() => setLoading(false))
-
     }, [postId])
 
     const deletePost = async () => {
@@ -58,7 +57,6 @@ const Post = () => {
             <h1>{post.title}</h1>
             <h5> Published: {new Date(post.published_date).toLocaleString()}</h5>
             <h5> Updated: {new Date(post.updated_date).toLocaleString()}</h5>
-
             <div id="blogPostBody">
                 {!editing ? <div>{parse(post.body)}</div> : <UpdateForm post={post} setPost={setPost} setEditing={setEditing} />}
             </div>

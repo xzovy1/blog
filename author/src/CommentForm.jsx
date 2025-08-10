@@ -8,7 +8,6 @@ const CommentForm = ({ setComments, comments, setCommenting }) => {
         const body = formData.get("body");
         let comment;
         try {
-
             await fetch(`${import.meta.env.VITE_URL}/api/posts/${postId}/comments`,
                 {
                     headers: { "authorization": `bearer ${localStorage.getItem("jwt")}`, "Content-Type": "application/x-www-form-urlencoded" },

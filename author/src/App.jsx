@@ -40,7 +40,5 @@ function App() {
     return <Login />
   }
   if (error) { return <ErrorPage /> }
-
 }
-
 export default App

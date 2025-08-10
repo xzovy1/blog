@@ -35,9 +35,9 @@ function BlogPosts() {
       <br />
       <Link to="/">Go Home</Link>
       {posts.map(post => {
-        return <li key={post.id} id={post.id} className='post'>
+        return <div key={post.id} id={post.id} className='post'>
           <PostInfo post={post} setPosts={setPosts} />
-        </li>
+        </div>
       })}
     </div>
   )
