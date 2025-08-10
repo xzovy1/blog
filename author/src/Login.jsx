@@ -30,9 +30,9 @@ function Login() {
             <h1>Login</h1>
             <form id='login-form' action={login} method='post' encType='application/x-www-form-urlencoded' navigate="true">
                 <label htmlFor="username">Username</label>
-                <input type="text" name="username" id="username" value="author" />
+                <input type="text" name="username" id="username" />
                 <label htmlFor="password">Password</label>
-                <input type="password" name="password" id="password" value="admin" />
+                <input type="password" name="password" id="password" />
                 <button>Login</button>
             </form>
         </div>

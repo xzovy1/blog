@@ -34,10 +34,11 @@ const login = async (req, res, next) => {
     { failureRedirect: "/login", successRedirect: "/" },
     (err, user, info) => {
       if (err) return next(err);
-      if (!user)
+      if (!user) {
         return res
           .json({ message: "Incorrect Username or Password" })
           .sendStatus(401);
+      }
       jwt.sign(
         { user },
         process.env.JWT_KEY,
