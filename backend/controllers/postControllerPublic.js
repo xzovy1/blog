@@ -19,7 +19,11 @@ const getIndividualPost = async (req, res) => {
       id: postId,
     },
     include: {
-      comments: true,
+      comments: {
+        include: {
+          replies: true
+        }
+      }
     },
   });
   res.json(post);

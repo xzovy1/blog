@@ -1,8 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Comments = ({ comments, setComments }) => {
     const [commenting, setCommenting] = useState(false);
-
     return (
         <>
             <h4>Comments</h4>
@@ -13,7 +12,10 @@ const Comments = ({ comments, setComments }) => {
                             <span>{new Date(comment.date).toLocaleString()}</span>
                             <span> {comment.author_name}:</span>
                             <div>{comment.body}</div>
-                            <ReplyForm comment={comment} />
+                            <div>
+                                <Replies replies={comment.replies} />
+                                <ReplyForm comment={comment} />
+                            </div>
                         </li>
                     })}
                 </ul> : <div>No comments</div>
@@ -27,7 +29,6 @@ const Comments = ({ comments, setComments }) => {
 }
 
 const ReplyForm = ({ comment }) => {
-    console.log(comment)
     const [error, setError] = useState(null);
     const handleReply = async (formdata) => {
         const reply = formdata.get("replyBody");
@@ -41,6 +42,7 @@ const ReplyForm = ({ comment }) => {
             body: `body=${encodeURIComponent(reply)}&author=author`
 
         })
+            .then(response => response.json())
             .then(response => { if (response.status >= 400) { throw new Error }; })
             .catch(error => setError(error))
     }
@@ -55,5 +57,40 @@ const ReplyForm = ({ comment }) => {
         </>
     )
 }
+
+const Replies = ({ replies }) => {
+    const [error, setError] = useState(null)
+    const [commentReplies, setCommentReplies] = useState(replies);
+
+
+    const deleteReply = async (id) => {
+        console.log(id)
+        if (confirm('Delete reply?')) {
+            await fetch(`${import.meta.env.VITE_URL}/api/posts/replies/${id}`,
+                {
+                    method: "delete",
+                    headers: { "authorization": `bearer ${localStorage.getItem("jwt")}` },
+                }
+            )
+                .then(response => {
+                    if (!response.ok) { throw new Error(`HTTP error. Status: ${response.status}`) }
+                })
+                .catch(error => setError(error))
+            setCommentReplies(commentReplies.filter(r => r.id !== id))
+
+        }
+    }
+
+    return commentReplies.map(reply => {
+        return <div key={reply.id}>
+            {error ? <div style={{ color: "red" }}>an error occurred</div> : ''}
+            <span>{reply.author_name} </span><span>{new Date(reply.date).toLocaleString()}</span>
+            <p>{reply.body}</p>
+            <button onClick={() => deleteReply(reply.id)}>Delete</button>
+        </div>
+    })
+
+}
+
 
 export default Comments

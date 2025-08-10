@@ -16,7 +16,6 @@ const Post = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
     const [comments, setComments] = useState([]);
-
     useEffect(() => {
         fetch(`${import.meta.env.VITE_URL}/api/posts/${postId}`)
             .then(res => res.json())
@@ -63,7 +62,7 @@ const Post = () => {
             <div id="blogPostBody">
                 {!editing ? <div>{parse(post.body)}</div> : <UpdateForm post={post} setPost={setPost} setEditing={setEditing} />}
             </div>
-            <Comments comments={comments} setComments={setComments} />
+            <Comments comments={comments} setComments={setComments} postId={postId} />
         </div>
     )
 }

@@ -74,6 +74,16 @@ const deleteBlogPostComment = async (req, res) => {
   console.log(`comment deleted on ${deleteComment.post.title}`);
   return res.json(deleteComment);
 };
+const deleteBlogPostReply = async (req, res) => {
+  const { replyId } = req.params;
+  const deleteReply = await prisma.reply.delete({
+    where: {
+      id: replyId,
+    },
+  });
+  return res.json(deleteReply);
+};
+
 
 export default {
   getAllPosts,
@@ -82,4 +92,5 @@ export default {
   deleteBlogPost,
   updateBlogPostComment,
   deleteBlogPostComment,
-};
+  deleteBlogPostReply,
+}

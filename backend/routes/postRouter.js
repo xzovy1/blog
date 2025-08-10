@@ -50,6 +50,10 @@ postRouter.get("/", postControllerPrivate.getAllPosts);
 postRouter.post("/", postControllerPrivate.createBlogPost);
 postRouter.put("/:postId", postControllerPrivate.updateBlogPost);
 postRouter.delete("/:postId", postControllerPrivate.deleteBlogPost);
+postRouter.delete(
+  "/replies/:replyId",
+  postControllerPrivate.deleteBlogPostReply
+)
 
 postRouter.put(
   "/:postId/:commentId",
@@ -59,5 +63,6 @@ postRouter.delete(
   "/:postId/:commentId",
   postControllerPrivate.deleteBlogPostComment
 );
+
 
 export default postRouter;
