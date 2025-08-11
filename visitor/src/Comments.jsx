@@ -17,7 +17,7 @@ const Comments = ({ comments, setComments }) => {
             {comments.length > 0 ?
                 <div className="comments">
                     {comments.map(comment => {
-                        return <div key={comment.id} className="comment">
+                        return <div key={comment.id} className="card comment">
                             <span>{new Date(comment.date).toDateString()}</span>
                             <span> {comment.author_name}:</span>
                             <div>{comment.body}</div>
@@ -56,7 +56,6 @@ const ReplyForm = ({ comment, setReplying }) => {
             .then(response => { if (response.status >= 400) { throw new Error }; })
             .catch(error => setError(error))
     }
-    console.log(comment)
     return (
         <>
             {error ? <div style={{ color: "red" }}>an error occurred</div> : ''}
@@ -82,7 +81,7 @@ const Replies = ({ replies }) => {
     const [commentReplies, setCommentReplies] = useState(replies);
     if(commentReplies){
         return ( commentReplies.map(reply => {
-            return <span key={reply.id} className="reply">
+            return <span key={reply.id} className="card reply">
                 {error ? <div style={{ color: "red" }}>an error occurred</div> : ''}
                 <span>{new Date(reply.date).toDateString()}</span>
                 <span>{reply.author_name}: </span>

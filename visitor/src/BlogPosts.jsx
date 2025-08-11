@@ -31,7 +31,7 @@ function BlogPosts() {
       {posts.length == 0 ? <p>No posts found</p> :
 
         posts.map(post => {
-          return <div key={post.id} id={post.id} className='post'>
+          return <div key={post.id} id={post.id} className='card'>
             <PostInfo post={post} setPosts={setPosts} />
           </div>
         })}

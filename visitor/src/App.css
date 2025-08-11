@@ -18,23 +18,37 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-
-.comment {
+.comments {
+  margin: 1em;
+  height: 100%;
+  display: grid;
+  gap: 10px;
+}
+.card {
   padding: 2em;
+  background-color: #88888862;
+  border-radius: 5px;
 }
 
 .comment,
 .reply {
   display: grid;
   background-color: #7171719e;
-  gap: 2%;
+  gap: 5px;
   color: #eaeaea;
 }
 
 .reply {
   background-color: #aaaaaa9e;
   align-self: center;
-  margin: 5px;
+  margin:  0 5px;
+  height: min-content;
+  padding: 0;
+  width: 60%;
+  margin: 0 auto;
+}
+.reply span {
+  text-align: center;
 }
 
 form {
