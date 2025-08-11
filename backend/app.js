@@ -7,6 +7,12 @@ const app = express();
 app.use(cors());
 app.use(urlencoded({ extended: true }));
 
+app.use((req, res, next) => {
+  res.setHeader(
+    "Content-Security-Policy",
+    "script-src 'self' https://blog-g0g.pages.dev/"
+  );
+});
 app.use("/api/posts", routes.postRouter);
 app.use("/", routes.loginRouter);
 
