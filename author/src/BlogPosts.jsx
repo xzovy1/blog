@@ -72,7 +72,7 @@ const PostInfo = ({ post, setPosts }) => {
   return (
     <>
       <Link to={post.id}>{post.title}</Link>
-      <p>{new Date(post.published_date).toLocaleString()}</p>
+      <p>Published: {new Date(post.published_date).toDateString()}</p>
       <button onClick={(e) => handlePublish(post.id, post.published_status, e)}>{buttonText}</button>
     </>
   )

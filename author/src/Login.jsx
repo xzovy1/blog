@@ -28,7 +28,7 @@ function Login() {
     return (
         <div>
             <h1>Login</h1>
-            <form id='login-form' action={login} method='post' encType='application/x-www-form-urlencoded' navigate="true">
+            <form id='login-form' action={login} >
                 <label htmlFor="username">Username</label>
                 <input type="text" name="username" id="username" />
                 <label htmlFor="password">Password</label>

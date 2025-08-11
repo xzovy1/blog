@@ -19,7 +19,7 @@ const NewPost = () => {
             {
                 method: "post",
                 headers: { "authorization": `bearer ${localStorage.getItem("jwt")}`, "Content-Type": "application/x-www-form-urlencoded" },
-                body: `title=${encodeURIComponent(title)}&body=${log()}`,
+                body: `title=${encodeURIComponent(title)}&body=${encodeURIComponent(log())}`,
             }
         ).then(navigate('/posts'))
     }

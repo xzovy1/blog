@@ -32,7 +32,7 @@ const Post = () => {
 
     const deletePost = async () => {
         if (confirm('Delete post?')) {
-            const response = await fetch(`${import.meta.env.VITE_URL}/api/posts/${postId}`,
+            await fetch(`${import.meta.env.VITE_URL}/api/posts/${postId}`,
                 {
                     method: "delete",
                     headers: { "authorization": `bearer ${localStorage.getItem("jwt")}` },
@@ -53,8 +53,8 @@ const Post = () => {
                 <button onClick={(e) => { setEditing(!editing); e.target.blur() }}>{!editing ? "Edit Post" : "Cancel Edit"}</button>
             </div>
             <h1>{post.title}</h1>
-            <h5> Published: {new Date(post.published_date).toLocaleString()}</h5>
-            <h5> Updated: {new Date(post.updated_date).toLocaleString()}</h5>
+            <h5> Published: {new Date(post.published_date).toDateString()}</h5>
+            <h5> Updated: {new Date(post.updated_date).toDateString()}</h5>
             <div id="blogPostBody">
                 {!editing ? <div>{parse(post.body)}</div> : <UpdateForm post={post} setPost={setPost} setEditing={setEditing} />}
             </div>
@@ -81,7 +81,7 @@ const UpdateForm = ({ post, setPost, setEditing }) => {
             {
                 method: "put",
                 headers: { "authorization": `bearer ${localStorage.getItem("jwt")}`, "Content-Type": "application/x-www-form-urlencoded" },
-                body: `title=${encodeURIComponent(title)}&body=${log()}`,
+                body: `title=${encodeURIComponent(title)}&body=${encodeURIComponent(log())}`,
             }
         )
             .then(r => r.json())

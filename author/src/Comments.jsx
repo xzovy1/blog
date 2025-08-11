@@ -1,24 +1,43 @@
 import { useState, useEffect } from "react";
+import CommentForm from "./CommentForm";
 
 const Comments = ({ comments, setComments }) => {
     const [commenting, setCommenting] = useState(false);
+    const [error, setError] = useState(null)
+    const deleteComment = async (comment) => {
+                console.log(comment.id)
+        if (confirm('Delete comment?')) {
+            await fetch(`${import.meta.env.VITE_URL}/api/posts/${comment.post_id}/${comment.id}`,
+                {
+                    method: "delete",
+                    headers: { "authorization": `bearer ${localStorage.getItem("jwt")}` },
+                }
+            )
+                .then(response => {
+                    if (!response.ok) { throw new Error(`HTTP error. Status: ${response.status}`) }
+                })
+                .catch(error => setError(error))
+            setComments(comments.filter(c => c.id !== comment.id));
+        }
+    }
     return (
         <>
             <h4>Comments</h4>
             {comments.length > 0 ?
-                <ul>
+                <div>
                     {comments.map(comment => {
-                        return <li key={comment.id} className="comment">
-                            <span>{new Date(comment.date).toLocaleString()}</span>
+                        return <div key={comment.id} className="comment">
+                            <span>{new Date(comment.date).toDateString()}</span>
                             <span> {comment.author_name}:</span>
                             <div>{comment.body}</div>
                             <div>
                                 <Replies replies={comment.replies} />
                                 <ReplyForm comment={comment} />
                             </div>
-                        </li>
+                            <button onClick={()=>{deleteComment(comment)}}>Delete</button>
+                        </div>
                     })}
-                </ul> : <div>No comments</div>
+                </div> : <div>No comments</div>
             }
             {!commenting ?
                 <button onClick={() => setCommenting(true)}>Add Comment</button> :
@@ -49,7 +68,7 @@ const ReplyForm = ({ comment }) => {
     return (
         <>
             {error ? <div style={{ color: "red" }}>an error occurred</div> : ''}
-            <form action={handleReply} method="post" encType='application/x-www-form-urlencoded'>
+            <form action={handleReply}>
                 <label htmlFor="replyBody">Reply:</label>
                 <input type="text" name="replyBody" id="replyBody" />
                 <button>Reply</button>
@@ -61,7 +80,6 @@ const ReplyForm = ({ comment }) => {
 const Replies = ({ replies }) => {
     const [error, setError] = useState(null)
     const [commentReplies, setCommentReplies] = useState(replies);
-
     const deleteReply = async (id) => {
         console.log(id)
         if (confirm('Delete reply?')) {
@@ -79,14 +97,15 @@ const Replies = ({ replies }) => {
 
         }
     }
-
-    return commentReplies.map(reply => {
-        return <div key={reply.id}>
-            {error ? <div style={{ color: "red" }}>an error occurred</div> : ''}
-            <span>{reply.author_name} </span><span>{new Date(reply.date).toLocaleString()}</span>
-            <p>{reply.body}</p>
-            <button onClick={() => deleteReply(reply.id)}>Delete</button>
-        </div>
-    })
+    if(commentReplies){
+        return ( commentReplies.map(reply => {
+            return <div key={reply.id}>
+                {error ? <div style={{ color: "red" }}>an error occurred</div> : ''}
+                <span>{reply.author_name} </span><span>{new Date(reply.date).toDateString()}</span>
+                <p>{reply.body}</p>
+                <button onClick={() => deleteReply(reply.id)}>Delete</button>
+            </div>
+        }))
+    }
 }
 export default Comments

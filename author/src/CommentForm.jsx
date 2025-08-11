@@ -16,13 +16,13 @@ const CommentForm = ({ setComments, comments, setCommenting }) => {
                     mode: "cors"
                 }
             ).then(r => r.json()).then(d => comment = d);
-            console.log(comment)
             setComments([
                 comment,
                 ...comments])
         } catch (err) {
             console.error(err);
         }
+        setCommenting(false)
     }
 
     return (
