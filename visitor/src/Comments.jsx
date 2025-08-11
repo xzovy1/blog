@@ -6,10 +6,11 @@ const Comments = ({ comments, setComments }) => {
     const [replying, setReplying] = useState(false);
     const [comment, setComment] = useState(null)
     const [error, setError] = useState(null)
-    const handleReply = (comment) => {
+    const handleReply = (comment, e) => {
         setComment(comment)
         setCommenting(false);
         setReplying(true)
+        document.getElementById("author").focus()
     }
     return (
         <>
@@ -22,7 +23,7 @@ const Comments = ({ comments, setComments }) => {
                             <span> {comment.author_name}:</span>
                             <div>{comment.body}</div>
                             <Replies replies={comment.replies} />
-                            <button onClick={() => handleReply(comment)}>Reply</button> 
+                            <button onClick={(e) => handleReply(comment, e)}>Reply</button> 
                         </div>
                     })}
                 </div> : <div>No comments</div>
