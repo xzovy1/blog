@@ -37,6 +37,17 @@
   padding: 2em;
 }
 
-.read-the-docs {
-  color: #888;
+.comment {
+  display: grid;
+  background-color: #7171719e;
+  gap: 5px;
+  color: #eaeaea;
+  margin: 1em;
+}
+
+.commentForm {
+  margin: 0 auto;
+  width: 40%;
+  display: grid;
+  gap: 0.6em;
 }
