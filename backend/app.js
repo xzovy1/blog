@@ -7,13 +7,13 @@ const app = express();
 app.use(cors());
 app.use(urlencoded({ extended: true }));
 
+const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
+
 app.use((req, res, next) => {
-  res.setHeader(
-    "Content-Security-Policy",
-    "script-src 'self' https://blog-g0g.pages.dev/"
-  );
+  res.setHeader("Access-Control-Allow-Origin", FRONTEND_URL);
   next();
 });
+
 app.use("/api/posts", routes.postRouter);
 app.use("/", routes.loginRouter);
 
