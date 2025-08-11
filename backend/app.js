@@ -12,6 +12,7 @@ app.use((req, res, next) => {
     "Content-Security-Policy",
     "script-src 'self' https://blog-g0g.pages.dev/"
   );
+  next();
 });
 app.use("/api/posts", routes.postRouter);
 app.use("/", routes.loginRouter);
