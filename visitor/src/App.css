@@ -18,35 +18,29 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
+.comment {
   padding: 2em;
 }
 
-.comment {
+.comment,
+.reply {
   display: grid;
   background-color: #7171719e;
-  gap: 5px;
+  gap: 2%;
   color: #eaeaea;
-  margin: 1em;
 }
 
-.commentForm {
+.reply {
+  background-color: #aaaaaa9e;
+  align-self: center;
+  margin: 5px;
+}
+
+form {
+  background-color: rgba(128, 128, 128, 0.599);
   margin: 0 auto;
+  padding: 1em;
   width: 40%;
   display: grid;
   gap: 0.6em;
