@@ -7,10 +7,11 @@ const app = express();
 app.use(cors());
 app.use(urlencoded({ extended: true }));
 
-const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
+const AUTHOR_URL = process.env.AUTHOR_URL || "http://localhost:5173";
+const VISITOR_URL = process.env.VISITOR_URL || "http://localhost:5173";
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", FRONTEND_URL);
+  res.setHeader("Access-Control-Allow-Origin", [AUTHOR_URL, VISITOR_URL]);
   next();
 });
 
