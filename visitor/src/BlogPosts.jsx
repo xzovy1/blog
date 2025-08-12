@@ -12,6 +12,7 @@ function BlogPosts() {
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_URL}/api/posts/published`, {
+      mode: "cors"
     })
       .then((response) => {
         if (response.status >= 400) {

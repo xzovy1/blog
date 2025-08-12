@@ -10,7 +10,7 @@ import BlogPost from "./BlogPost.jsx"
 import ErrorPage from './ErrorPage.jsx'
 const router = createBrowserRouter([
   { path: "/", element: <App />, errorElement: <ErrorPage />, },
-  { path: "/login", element: <Login />, },
+  { path: "/login", element: <Login />, errorElement: <ErrorPage />,},
   { path: "/posts", element: <BlogPosts />, errorElement: <ErrorPage />, },
   { path: "/posts/new", element: <NewPost />, errorElement: <ErrorPage />, },
   { path: "/posts/:postId", element: <BlogPost />, errorElement: <ErrorPage />, }
