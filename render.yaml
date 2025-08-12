@@ -1,0 +1,17 @@
+services:
+  - type: web
+    plan: free
+    runtime: node
+    repo: https://github.com/xzovy1/blog.git
+    preDeployCommand: npx prisma migrate deploy
+    buildCommand: npm install --production=false
+    startCommand: npm run start
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: blog-postgres
+          property: connectionString
+
+databases:
+  - name: blog-postgres
+    plan: free
