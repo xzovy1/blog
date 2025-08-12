@@ -4,14 +4,16 @@ import cors from "cors";
 import "dotenv/config";
 
 const app = express();
-app.use(cors());
 app.use(urlencoded({ extended: true }));
 
 const AUTHOR_URL = process.env.AUTHOR_URL || "http://localhost:5173";
 const VISITOR_URL = process.env.VISITOR_URL || "http://localhost:5173";
-
+const corsOptions = {
+  origin: "*",
+};
+app.use(cors(corsOptions));
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", [AUTHOR_URL, VISITOR_URL]);
+  res.set("Access-Control-Allow-Origin", "*");
   next();
 });
 

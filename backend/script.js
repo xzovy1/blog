@@ -19,7 +19,12 @@ const dummyPosts = [
 ];
 
 async function main() {
-  const script = await prisma.author.findMany();
+  const script = await prisma.author.create({
+    data: {
+      name: "admin",
+      password: await bcrypt.hash("admin", 10),
+    },
+  });
   console.log(script);
 }
 

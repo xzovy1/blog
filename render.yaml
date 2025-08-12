@@ -1,5 +1,6 @@
 services:
   - type: web
+    name: blog
     plan: free
     runtime: node
     repo: https://github.com/xzovy1/blog.git
